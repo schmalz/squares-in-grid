@@ -27,14 +27,22 @@
 (defn- draw-quad
   []
   (quil/stroke 180 9 63 (rand))
-  (quil/quad (rand-int-around 100)
+  (quil/line (rand-int-around 100)
              (rand-int-around 100)
              (rand-int-around 800)
+             (rand-int-around 100))
+  (quil/line (rand-int-around 800)
              (rand-int-around 100)
              (rand-int-around 800)
+             (rand-int-around 800))
+  (quil/line (rand-int-around 800)
              (rand-int-around 800)
              (rand-int-around 100)
-             (rand-int-around 800)))
+             (rand-int-around 800))
+  (quil/line (rand-int-around 100)
+             (rand-int-around 800)
+             (rand-int-around 100)
+             (rand-int-around 100)))
 
 (defn- draw-point
   []
