@@ -2,6 +2,8 @@
   (:require [clojure.pprint :as pretty]
             [quil.core :as quil]))
 
+(def variance 8)
+
 (defn save-frame-to-disk
   ([]
    (quil/save-frame (pretty/cl-format nil
@@ -19,28 +21,36 @@
 (defn- rand-int-around
   [n]
   (+ n
-     (- (rand-int 5)
-        2)))
+     (- (rand-int (inc (* 2 variance)))
+        variance)))
+
+(defn- draw-quad
+  []
+  (quil/stroke 180 9 63 (rand))
+  (quil/quad (rand-int-around 100)
+             (rand-int-around 100)
+             (rand-int-around 800)
+             (rand-int-around 100)
+             (rand-int-around 800)
+             (rand-int-around 800)
+             (rand-int-around 100)
+             (rand-int-around 800)))
+
+(defn- draw-point
+  []
+  (quil/point (rand-int (quil/width))
+              (rand-int (quil/height))))
 
 (defn draw
   []
   (quil/no-loop)
   (quil/background 44 10 99)
   (quil/no-fill)
-  (quil/stroke 180 9 63 0.5)
   (dotimes [_ 5]
-    (quil/quad (rand-int-around 100)
-               (rand-int-around 100)
-               (rand-int-around 800)
-               (rand-int-around 100)
-               (rand-int-around 800)
-               (rand-int-around 800)
-               (rand-int-around 100)
-               (rand-int-around 800)))
+    (draw-quad))
   (quil/stroke 44 10 99)
   (dotimes [_ 750000]
-    (quil/point (rand-int 900)
-                (rand-int 900)))
+    (draw-point))
   (save-frame-to-disk))
 
 (defn initialise
