@@ -4,6 +4,9 @@
 
 (def variance 8)
 
+(def low 100)
+(def high 800)
+
 (defn save-frame-to-disk
   ([]
    (quil/save-frame (pretty/cl-format nil
@@ -19,30 +22,36 @@
    state))
 
 (defn- rand-int-around
-  [n]
+  "A random integer in the range N +/- X."
+  [n x]
   (+ n
-     (- (rand-int (inc (* 2 variance)))
-        variance)))
+     (- (rand-int (inc (* 2 x)))
+        x)))
 
 (defn- draw-quad
   []
   (quil/stroke 180 9 63 (rand))
-  (quil/line (rand-int-around 100)
-             (rand-int-around 100)
-             (rand-int-around 800)
-             (rand-int-around 100))
-  (quil/line (rand-int-around 800)
-             (rand-int-around 100)
-             (rand-int-around 800)
-             (rand-int-around 800))
-  (quil/line (rand-int-around 800)
-             (rand-int-around 800)
-             (rand-int-around 100)
-             (rand-int-around 800))
-  (quil/line (rand-int-around 100)
-             (rand-int-around 800)
-             (rand-int-around 100)
-             (rand-int-around 100)))
+  (quil/line (rand-int-around low variance)
+             (rand-int-around low variance)
+             (rand-int-around high variance)
+             (rand-int-around low variance))
+  (quil/line (rand-int-around high variance)
+             (rand-int-around low variance)
+             (rand-int-around high variance)
+             (rand-int-around high variance))
+  (quil/line (rand-int-around high variance)
+             (rand-int-around high variance)
+             (rand-int-around low variance)
+             (rand-int-around high variance))
+  (quil/line (rand-int-around low variance)
+             (rand-int-around high variance)
+             (rand-int-around low variance)
+             (rand-int-around low variance)))
+
+(defn- draw-quads
+  [n]
+  (dotimes [_ n]
+    (draw-quad)))
 
 (defn- draw-point
   []
@@ -54,8 +63,7 @@
   (quil/no-loop)
   (quil/background 44 10 99)
   (quil/no-fill)
-  (dotimes [_ 5]
-    (draw-quad))
+  (draw-quads 7)
   (quil/stroke 44 10 99)
   (dotimes [_ 750000]
     (draw-point))

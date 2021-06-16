@@ -4,7 +4,7 @@
   (:gen-class))
 
 (quil/defsketch sketch
-  :title "Red Squares"
+  :title "Grey Square"
   :setup dynamic/initialise
   :draw dynamic/draw
   :features [:keep-on-top]
