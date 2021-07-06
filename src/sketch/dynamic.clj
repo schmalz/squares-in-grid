@@ -28,9 +28,28 @@
      (- (rand-int (inc (* 2 x)))
         x)))
 
+(defn- draw-shade-line
+  []
+  (quil/stroke 180 9 63 (rand)) ; base1 (grey)
+  (quil/curve (quil/random low high)
+              (quil/random low high)
+              (quil/random low high)
+              (quil/random low high)
+              (quil/random low high)
+              (quil/random low high)
+              (quil/random low high)
+              (quil/random low high))
+  )
+
+(defn- draw-shading
+  [n]
+  (dotimes [_ n]
+    (draw-shade-line)))
+
 (defn- draw-quad
   []
-  (quil/stroke 180 9 63 (rand))
+  (quil/stroke 45 100 71 (rand)) ; yellow
+  
   (quil/line (rand-int-around low variance)
              (rand-int-around low variance)
              (rand-int-around high variance)
@@ -64,6 +83,7 @@
   (quil/background 44 10 99)
   (quil/no-fill)
   (draw-quads 7)
+  (draw-shading 1001)
   (quil/stroke 44 10 99)
   (dotimes [_ 750000]
     (draw-point))
