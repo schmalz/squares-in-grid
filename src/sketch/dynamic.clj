@@ -49,7 +49,6 @@
 (defn- draw-quad
   []
   (quil/stroke 45 100 71 (rand)) ; yellow
-  
   (quil/line (rand-int-around low variance)
              (rand-int-around low variance)
              (rand-int-around high variance)
@@ -77,6 +76,12 @@
   (quil/point (rand-int (quil/width))
               (rand-int (quil/height))))
 
+(defn- draw-points
+  [n]
+  (quil/stroke 44 10 99)
+  (dotimes [_ n]
+    (draw-point)))
+
 (defn draw
   []
   (quil/no-loop)
@@ -84,9 +89,7 @@
   (quil/no-fill)
   (draw-quads 7)
   (draw-shading 1001)
-  (quil/stroke 44 10 99)
-  (dotimes [_ 750000]
-    (draw-point))
+  (draw-points 750000)
   (save-frame-to-disk))
 
 (defn initialise
